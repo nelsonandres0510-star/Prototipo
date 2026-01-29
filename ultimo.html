@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiencia Web Unificada</title>
+    <title>Experiencia Web Unificada - Palabras</title>
     <style>
         /* --- CONFIGURACIÓN BASE Y VARIABLES --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,47 +25,51 @@
         nav a { text-decoration: none; color: #fff; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; transition: 0.3s; }
         nav a:hover { opacity: 1; }
 
-        /* --- DECORACIÓN DE FONDO --- */
         .background-text {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-size: 12vw; font-weight: 900; color: rgba(255, 255, 255, 0.02);
             z-index: 0; text-transform: uppercase; pointer-events: none;
         }
 
-        /* --- SECCIONES COMUNES --- */
-        .hero, .spacer {
+        .hero {
             height: 100vh; display: flex; justify-content: center; align-items: center;
             text-align: center; position: relative; z-index: 1;
         }
 
         /* --- EFECTO 1: VIDEO ESCALA --- */
-        .video-scroll-container { height: 300vh; position: relative; z-index: 1; }
+        .video-scroll-container { height: 250vh; position: relative; z-index: 1; }
         .sticky-wrapper { position: sticky; top: 0; height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         #meuVideo { width: 100%; height: 100vh; object-fit: cover; transform: scale(0.3); border-radius: 50px; will-change: transform; }
 
-        /* --- EFECTO 2: GALERÍA IMÁGENES --- */
+        /* --- EFECTO 2: PÁRRAFO POR PALABRAS (MOVIDO AQUÍ) --- */
+        .scroll-area-explosion { height: 350vh; position: relative; z-index: 1; }
+        .sticky-scene { position: sticky; top: 0; height: 100vh; display: flex; justify-content: center; align-items: center; perspective: 1200px; padding: 10%; }
+        #text-container { text-align: center; font-size: 3rem; line-height: 1.2; font-weight: 800; max-width: 1000px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        
+        /* Clase corregida para palabras */
+        .word-unit { 
+            display: inline-block; 
+            will-change: transform, opacity; 
+            opacity: 0; 
+            white-space: nowrap;
+        }
+
+        /* --- EFECTO 3: GALERÍA IMÁGENES --- */
         .section-wrapper { height: 120vh; position: relative; z-index: 1; margin-bottom: 5vh; }
         .sticky-box { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .image-container { width: 50%; max-width: 550px; height: 350px; transform: scale(0.6); opacity: 0; transition: transform 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.4s ease; border-radius: 4px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .image-container { width: 50%; max-width: 550px; height: 350px; transform: scale(0.6); opacity: 0; transition: transform 0.2s ease-out, opacity 0.4s ease; border-radius: 10px; overflow: hidden; }
         .image-container img { width: 100%; height: 100%; object-fit: cover; }
         .content { position: absolute; text-align: center; width: 100%; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
-        .title { top: 18%; font-size: 1.8rem; letter-spacing: 10px; font-weight: 200; }
-        .description { bottom: 18%; font-size: 0.85rem; color: #777; max-width: 280px; line-height: 1.6; }
+        .title { top: 15%; font-size: 2rem; letter-spacing: 10px; font-weight: 200; text-transform: uppercase; }
+        .description { bottom: 15%; font-size: 1rem; color: #888; max-width: 350px; }
+        
         .section-wrapper.active .image-container { opacity: 1; }
         .section-wrapper.show-text .content { opacity: 1; transform: translateY(0); }
 
-        /* --- EFECTO 3: PÁRRAFO EXPLOSIÓN --- */
-        .scroll-area-explosion { height: 400vh; position: relative; z-index: 1; }
-        .sticky-scene { position: sticky; top: 0; height: 100vh; display: flex; justify-content: center; align-items: center; perspective: 1000px; padding: 10%; }
-        #text-container { text-align: center; font-size: 2.2rem; line-height: 1.4; font-weight: 700; max-width: 900px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-        .char { display: inline-block; will-change: transform, opacity; transition: transform 0.1s ease-out, opacity 0.1s ease-out; }
-
         /* --- EFECTO 4: LINK MULTICOLOR --- */
         .link-section { height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; z-index: 1; }
-        .fancy-link { font-size: 3.5rem; color: #fff; text-decoration: none; font-weight: 900; padding: 20px; transition: all 0.4s ease; text-transform: uppercase; }
-        .fancy-link:hover { transform: scale(1.1); border-bottom: 5px solid #fff; }
+        .fancy-link { font-size: 3.5rem; color: #fff; text-decoration: none; font-weight: 900; text-transform: uppercase; transition: 0.4s; }
 
-        /* --- ANIMACIÓN FONDO MULTICOLOR --- */
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         body.hover-active {
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -78,10 +82,9 @@
     <nav>
         <ul class="nav-left">
             <li><a href="#">Inicio</a></li><li><a href="#">Proyectos</a></li><li><a href="#">Estudio</a></li>
-            <li><a href="#">Blog</a></li><li><a href="#">Premios</a></li><li><a href="#">Cultura</a></li>
         </ul>
         <ul class="nav-right">
-            <li><a href="#">Contacto</a></li><li><a href="#">ES/EN</a></li>
+            <li><a href="#">Contacto</a></li>
         </ul>
     </nav>
 
@@ -94,28 +97,8 @@
     <div class="video-scroll-container">
         <div class="sticky-wrapper">
             <video id="meuVideo" autoplay muted loop playsinline>
-                <source src="1.mp4" type="video/mp4">
+                <source src="img/1.mp4" type="video/mp4">
             </video>
-        </div>
-    </div>
-
-    <div class="section-wrapper">
-        <div class="sticky-box">
-            <h2 class="content title">Creatividad</h2>
-            <div class="image-container">
-                <img src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="1">
-            </div>
-            <p class="content description">Haz volar tu mente con muchas ideas</p>
-        </div>
-    </div>
-
-    <div class="section-wrapper">
-        <div class="sticky-box">
-            <h2 class="content title">Innovacion</h2>
-            <div class="image-container">
-                <img src="https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="2">
-            </div>
-            <p class="description content">Haz cosas nuevas</p>
         </div>
     </div>
 
@@ -125,39 +108,56 @@
         </div>
     </div>
 
+    <div class="section-wrapper">
+        <div class="sticky-box">
+            <h2 class="content title">Creatividad</h2>
+            <div class="image-container">
+                <img src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="1">
+            </div>
+            <p class="content description">Haz volar tu mente con nuevas ideas.</p>
+        </div>
+    </div>
+
+    <div class="section-wrapper">
+        <div class="sticky-box">
+            <h2 class="content title">Innovación</h2>
+            <div class="image-container">
+                <img src="https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="2">
+            </div>
+            <p class="description content">Explora nuevos horizontes digitales.</p>
+        </div>
+    </div>
+
     <section class="link-section">
         <a href="#" class="fancy-link" id="color-trigger">¡Siguiente Nivel!</a>
     </section>
 
     <script>
-        // --- 1. Lógica Párrafo Explosivo (Setup) ---
-        const phrase = "La creatividad es la inteligencia divirtiéndose. Al unir las piezas correctas, transformamos el espacio en una experiencia única.";
+        // --- 1. Lógica Párrafo Explosivo (PALABRAS) ---
+        const phrase = "La creatividad es la inteligencia divirtiéndose. Las ideas cobran vida cuando las piezas encajan perfectamente.";
         const textContainer = document.getElementById('text-container');
+
         phrase.split(" ").forEach(word => {
-            const wordDiv = document.createElement('div');
-            wordDiv.style.whiteSpace = "nowrap";
-            word.split("").forEach(char => {
-                const span = document.createElement('span');
-                span.textContent = char;
-                span.className = 'char';
-                span.dataset.x = (Math.random() - 0.5) * 2000;
-                span.dataset.y = (Math.random() - 0.5) * 2000;
-                span.dataset.z = (Math.random() - 0.5) * 2000;
-                span.dataset.r = (Math.random() - 0.5) * 360;
-                wordDiv.appendChild(span);
-            });
-            const space = document.createElement('span');
-            space.innerHTML = "&nbsp;";
-            wordDiv.appendChild(space);
-            textContainer.appendChild(wordDiv);
+            const span = document.createElement('span');
+            span.textContent = word;
+            span.className = 'word-unit';
+            // Valores de dispersión inicial para cada palabra
+            span.dataset.x = (Math.random() - 0.5) * 3000;
+            span.dataset.y = (Math.random() - 0.5) * 2000;
+            span.dataset.z = (Math.random() - 0.5) * 2000;
+            span.dataset.r = (Math.random() - 0.5) * 180;
+            
+            textContainer.appendChild(span);
+            // Espacio entre palabras
+            textContainer.appendChild(document.createTextNode(" "));
         });
 
-        // --- 2. Lógica Scroll (Video, Galería y Explosión) ---
+        // --- 2. Lógica Scroll ---
         const video = document.getElementById('meuVideo');
         const videoContainer = document.querySelector('.video-scroll-container');
         const sections = document.querySelectorAll('.section-wrapper');
         const explosionArea = document.querySelector('.scroll-area-explosion');
-        const chars = document.querySelectorAll('.char');
+        const words = document.querySelectorAll('.word-unit');
 
         window.addEventListener('scroll', () => {
             // Video Scale
@@ -167,37 +167,38 @@
             video.style.transform = `scale(${0.3 + (vProg * 0.7)})`;
             video.style.borderRadius = `${50 - (vProg * 50)}px`;
 
+            // Explosión de Palabras
+            const exRect = explosionArea.getBoundingClientRect();
+            let exProg = -exRect.top / (exRect.height - window.innerHeight);
+            exProg = Math.max(0, Math.min(1, exProg));
+            
+            words.forEach(word => {
+                const x = word.dataset.x * (1 - exProg);
+                const y = word.dataset.y * (1 - exProg);
+                const z = word.dataset.z * (1 - exProg);
+                const r = word.dataset.r * (1 - exProg);
+                word.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotate(${r}deg)`;
+                word.style.opacity = exProg;
+            });
+
             // Galería Zoom
             sections.forEach(section => {
                 const rect = section.getBoundingClientRect();
                 let prog = -rect.top / (rect.height - window.innerHeight);
                 prog = Math.max(0, Math.min(1, prog));
+                
                 if (rect.top < window.innerHeight) section.classList.add('active');
                 section.querySelector('.image-container').style.transform = `scale(${0.6 + (prog * 0.4)})`;
+                
                 if (prog > 0.7) section.classList.add('show-text');
                 else section.classList.remove('show-text');
             });
-
-            // Explosión Texto
-            const exRect = explosionArea.getBoundingClientRect();
-            let exProg = -exRect.top / (exRect.height - window.innerHeight);
-            exProg = Math.max(0, Math.min(1, exProg));
-            chars.forEach(char => {
-                const x = char.dataset.x * (1 - exProg);
-                const y = char.dataset.y * (1 - exProg);
-                const z = char.dataset.z * (1 - exProg);
-                const r = char.dataset.r * (1 - exProg);
-                char.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotate(${r}deg)`;
-                char.style.opacity = exProg;
-            });
         });
 
-        // --- 3. Lógica Hover Multicolor ---
+        // --- 3. Hover Multicolor ---
         const trigger = document.getElementById('color-trigger');
         trigger.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
         trigger.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
     </script>
 </body>
-
 </html>
-
